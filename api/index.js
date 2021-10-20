@@ -12,6 +12,11 @@ const mongoose = require("mongoose");
 //var config = require('./db.js');
 
 const app = express();
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+
 let gfs, mongoURI, conn;
 
 // Add headers
@@ -22,9 +27,8 @@ app.use(function (req, res, next) {
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
     // Request headers you wish to allow
-    // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
@@ -56,8 +60,10 @@ app.use(function (req, res, next) {
 const storage = new GridFsStorage({
     url: mongoURI,
     file: (req, file) => {
+
         return new Promise((resolve, reject) => {
             crypto.randomBytes(16, (err, buf) => {
+                console.log('calling storage');
                 if (err) {
                     return reject(err);
                 }
@@ -76,11 +82,11 @@ const upload = multer({ storage });
 
 // Upload method
 app.post('/Upload', upload.array('files', 12), (req, res) => {
-    var files = req.files, filesNames = [];
+    console.log('calling upload', req);
+    var files = req.file, filesNames = [];
 
     // set files name
-    for (var i = 0; i < files.length; i++)
-        filesNames.push(files[i].filename);
+    for (var i = 0; i < files.length; i++) filesNames.push(files[i].filename);
 
 
     res.json({ success: true, filesNames: filesNames });
@@ -104,6 +110,9 @@ app.get('/images/:filename', (req, res) => {
     });
 });
 
+// const port =process.env.PORT || 8008
+// app.server = app.listen(port,()=>{
+//     console.log(`Upload server is running on port ${port}`);
+// });
 const port = 8008;
 app.listen(port, () => console.log('Upload server is running on ' + port));
-//});

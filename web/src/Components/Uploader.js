@@ -2,7 +2,9 @@ import React, { Component, useState } from 'react';
 import Mountain from '../images/Mountain.svg'
 import { Button } from "@chakra-ui/react";
 import Loading from './Loading';
-import { uploadImage } from '../API/UploadImage';
+// import { uploadImage } from '../API/UploadImage';
+// import { ReactNativeFile } from 'extract-files';
+import storage from '../firebase';
 // import DragAndDrop from './DragAndDrop';
 
 export default function Uploader() {
@@ -16,7 +18,7 @@ export default function Uploader() {
   }
   const _onFileChangeCapture = (e) => {
     /*Selected files data can be collected here.*/
-    console.log(e.target.files);
+    console.log(e.target.files[0]);
     const {
     target
     } = e;
@@ -25,12 +27,15 @@ export default function Uploader() {
       } = target;
     if (files.length > 0) {
       setIsuploading(true);
-      uploadImage(files[0]).then((response) => {
-        console.log('getting response', response);
-        setIsuploaded(true);
-        setUploadedImage(URL.createObjectURL(files[0]));
-      });
-      
+      // const formData = new FormData();
+      // formData.append('files', files[0]);
+      // uploadImage(formData).then((response) => {
+      //   console.log('getting response', response);
+      //   setIsuploaded(true);
+      //   setUploadedImage(URL.createObjectURL(files[0]));
+      //   setIsuploading(false);
+      // });
+      storage.ref(`/images/${files[0].name}`).put(files[0]).on("state_changed" , alert("success") , alert);
     }
   };
   const _buttonClick = () => {
