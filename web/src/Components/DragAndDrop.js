@@ -45,7 +45,7 @@ export default class DragAndDrop extends Component {
         e.preventDefault();
         e.stopPropagation();
         this.setState({
-            drag: false
+            dragging: false
         });
         if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
             handleDrop(e.dataTransfer.files);

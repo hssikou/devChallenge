@@ -115,6 +115,13 @@
   justify-content: space-evenly;
 }
 
+.uploaded h2 {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 27px;
+  padding-bottom: 1rem;
+}
+
 
 .check {
 width: 35px;
@@ -164,5 +171,8 @@ width: 35px;
   color: white;
 }
 .hidden {
+  display: none;
+}
+.fileSelector {
   display: none;
 }
