@@ -1,5 +1,5 @@
 export async function uploadImage(file) {
-    const url = 'http://192.168.0.110:8008/Upload';
+    const url = 'http://localhost:8008/Upload';
     console.log('from API link', file);
     try {
       const response = await fetch(url, {

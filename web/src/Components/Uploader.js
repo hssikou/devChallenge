@@ -67,7 +67,7 @@ export default function Uploader() {
       uploadImage(formData).then((response) => {
         console.log('getting response', response);
         setIsuploaded(true);
-        setUploadedImage(URL.createObjectURL(FormData[0]));
+        setUploadedImage(URL.createObjectURL(data[0]));
         setIsuploading(false);
       });
     }
