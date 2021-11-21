@@ -83,8 +83,8 @@ const upload = multer({ storage });
 // Upload method
 app.post('/Upload', upload.array('files', 12), (req, res) => {
     console.log('calling upload', req);
-    var files = req.file, filesNames = [];
-
+    var files = req.files, filesNames = [];
+console.log('files', files);
     // set files name
     for (var i = 0; i < files.length; i++) filesNames.push(files[i].filename);
 
